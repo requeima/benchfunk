@@ -6,3 +6,5 @@
 /examples/*.jugdata
 /examples/*.png
 /examples/*.pdf
+*.pyc
+.idea
