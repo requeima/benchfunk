@@ -12,7 +12,7 @@ import numpy as np
 
 from ..utils import rstate, repr_args
 
-__all__ = ['Sinusoidal', 'Gramacy', 'Branin', 'Bohachevsky', 'Goldstein',
+__all__ = ['Sinusoidal', 'Gramacy', 'Branin', 'Branin4D', 'Bohachevsky', 'Goldstein',
            'Hartmann3', 'Hartmann6']
 
 
@@ -99,6 +99,28 @@ class Branin(Benchmark):
         # NOTE: this rescales branin by 10 to make it more manageable.
         y /= 10.
         return -y
+
+class Branin4D(Benchmark):
+    """
+    The $$ Branin function bounded in [-5,10] to [0,15]. Global optimizers
+    exist at [-pi, 12.275], [pi, 2.275], and [9.42478, 2.475] with no local
+    optimizers.
+    """
+    bounds = np.array([[-5, 10.], [0, 15], [-1., 1.], [-1., 1.]])
+    xopt = np.array([np.pi, 2.275, 0.0, 0.0])
+    ndim = 4
+
+    def _f(self, X_):
+        x12 = np.array(X_[:,0:2])
+        x34 = np.array(X_[:,2:])
+
+        y = (x12[:, 1] - (5.1 / (4 * np.pi ** 2)) * x12[:, 0] ** 2 + 5 * x12[:, 0] / np.pi - 6) ** 2
+        y += 10 * (1 - 1 / (8 * np.pi)) * np.cos(x12[:, 0]) + 10
+        # NOTE: this rescales branin by 10 to make it more manageable.
+        y /= 10.
+
+        d =  0.5 * np.square(x34[:,0]) - 10.0*np.square(x34[:,1])
+        return -y + d
 
 
 class Bohachevsky(Benchmark):
