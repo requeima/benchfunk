@@ -70,6 +70,16 @@ class Sinusoidal(Benchmark):
         return -np.ravel(np.cos(x) + np.sin(3*x))
 
 
+class LinTrig(Benchmark):
+    bounds = np.array([[0.5, 2.5]])
+    xopt = np.array([0.54856343])
+    ndim = 1
+
+
+    def _f(self, x):
+        return np.ravel(np.sin(10 * np.pi * x) / (2 * x) - (x - 1) ** 4)
+
+
 class Gramacy(Benchmark):
     """
     Sinusoidal function in 1d used by Gramacy and Lee in "Cases for the nugget
