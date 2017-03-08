@@ -215,3 +215,4 @@ class Hartmann6(Benchmark):
         # used in Picheny et al., 2012.
         F = (F + 2.58) / 1.94
         return F
+

@@ -48,7 +48,10 @@ class PriorFunction(object):
         """Vectorized access to the benchmark function."""
         # FIXME: I don't like this. It requires you to know the internal
         # workings of the model.
-        return self._model.like.sample(self.get_f(X))
+        if self._model.__class__.__name__ == 'MCMC':
+            return self.get_f(X)
+        else:
+            return self._model._like.sample(self.get_f(X))
 
     def get_f(self, X):
         """Vectorized access to the noise-free benchmark function."""
